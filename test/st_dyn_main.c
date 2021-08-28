@@ -4,7 +4,9 @@
 
 int main()
 {
-  stack_sz(int) pp;
-  st_malloc(pp, 10);
+  st_malloc_struct ptr;
+  st_init(&ptr);
+  st_malloc(&ptr, 10);
+  ptr.float_d[0] = 2.123;
   return 0;
 }
