@@ -1,3 +1,6 @@
+#ifndef ST_VECTOR
+#define ST_VECTOR
+
 #include <stdlib.h>
 
 #define BLOAT 0
@@ -33,3 +36,5 @@
     X.data = NULL, \
     X.len =0 \
     )
+
+#endif
