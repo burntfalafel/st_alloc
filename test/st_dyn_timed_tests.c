@@ -2,6 +2,8 @@
 #include<stdlib.h>
 #include<time.h>
 
+#include "st_vector.h"
+
 /* should pertain the limits offered by the stack memory count
  * can be seen on your system through `ulimit -s`
  */
@@ -63,7 +65,7 @@ int main()
 		ptr = addList(ptr, 'a');
 	float endTime = (float)clock()/CLOCKS_PER_SEC;
 	float timeElapsed = endTime - startTime;
-  printf("\nDynamic memory allocation uses this address: %p",ptr);
+  printf("Dynamic memory allocation uses this address: %p",ptr);
 	printf("\nA dynamic memory allocation which uses linked lists use time %9.5f\n", timeElapsed);
 	deleteList(ptr);
   /* A benchmark of a static memory allocation
@@ -77,5 +79,18 @@ int main()
 	timeElapsed = endTime - startTime;
   printf("\nStatic memory allocation uses this address: %p",array);
 	printf("\nA static allocation which uses arrays use time %9.5f\n", timeElapsed);
+  /* A benchmark of a static memory allocation
+   * uses stack address. 
+   */
+	startTime = (float)clock()/CLOCKS_PER_SEC;
+  st_vector(char) vector;
+  st_init(vector);
+	for(int i=0; i<SAMPLE_COUNT; i++)
+    st_push(vector, 'a');
+	endTime = (float)clock()/CLOCKS_PER_SEC;
+	timeElapsed = endTime - startTime;
+  printf("\nDynamic memory vector allocation uses this address: %p",vector.data);
+	printf("\nDynamic allocation which uses vectors use time %9.5f\n", timeElapsed);
+  st_free(vector);
 	return 0;
 }

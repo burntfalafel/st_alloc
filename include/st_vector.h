@@ -29,5 +29,7 @@
     )
 
 #define st_free(X) (\
-    free(X.data) \
+    free(X.data), \
+    X.data = NULL, \
+    X.len =0 \
     )
