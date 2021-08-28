@@ -1,21 +1,33 @@
+#include <stdlib.h>
+
 #define BLOAT 0
 
 #define st_vector(X) \
   struct { \
     size_t len; \
-    X data[]; \
+    size_t mem ; \
+    X blank; \
+    X *data; \
   }
 
 #define st_init(X) (\
-  (X).len = 0 \
+  (X).len = 0, \
+  (X).data = NULL, \
+  (X).mem = sizeof((X).blank) \
   )
 
 #define st_push(X,V) (\
-    (X).data[(X).len] = V, \
-    (X).len++ \
+    (X).len++, \
+    (X).data = realloc(X.data,((X).mem*(X).len)), \
+    (X).data[(X).len - 1] = V \
     )
 
 #define st_pop(X) (\
-    (X).data[(X).len-1] \
+    (X).len--, \
+    (X).data = realloc(X.data,((X).mem*(X).len)), \
+    (X).data[(X).len] \
     )
 
+#define st_free(X) (\
+    free(X.data) \
+    )
